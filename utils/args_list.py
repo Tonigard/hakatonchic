@@ -1,0 +1,1 @@
+HELP_FLAGS = ('--help', '-h')
