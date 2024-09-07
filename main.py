@@ -1,14 +1,20 @@
 import sys
-import utils.args_list as args_list
 from pathlib import Path
+import pandas as pd
 
-def main(data: Path):
-    print(data)
+import utils.args_list as args_list
+from core.models import load_model_from_file
+from utils.config import BASE_MODEL_PATH
+
+
+def main(data_path: Path):
+    print(data_path.absolute())
+    data = pd.read_csv(data_path.absolute())
     
+    model = load_model_from_file(Path(BASE_MODEL_PATH))
+    print(model.is_fitted())
 
 if __name__ == '__main__':
-    interval = '-t3'
-
     if any(flag in sys.argv for flag in args_list.HELP_FLAGS):
         print(
             '\nДля генерации предсказаний модели укажите путь к файлу с данными в формате csv',
