@@ -5,14 +5,17 @@ import pandas as pd
 import utils.args_list as args_list
 from core.models import load_model_from_file
 from utils.config import BASE_MODEL_PATH
+from core.dataloader import load_data, transform_data
 
 
 def main(data_path: Path):
     print(data_path.absolute())
-    data = pd.read_csv(data_path.absolute())
+    data = load_data(data_path)
+    data = transform_data(data)
     
     model = load_model_from_file(Path(BASE_MODEL_PATH))
-    print(model.is_fitted())
+    prediction = model.predict(data)
+    print(prediction)
 
 if __name__ == '__main__':
     if any(flag in sys.argv for flag in args_list.HELP_FLAGS):
